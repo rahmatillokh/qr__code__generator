@@ -19,12 +19,13 @@ function App() {
         const url = window.URL.createObjectURL(blob);
         setUrl(url);
         setData(url); // Set data to the Blob URL
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setData(false); // Set data to false if there's an error
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
