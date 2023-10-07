@@ -11,7 +11,7 @@ function App() {
   const handleFetch = () => {
     setLoading(true);
     axios
-      .get(`http://api.qrserver.com/v1/create-qr-code/?data=${value}`, {
+      .get(`https://api.qrserver.com/v1/create-qr-code/?data=${value}`, {
         responseType: "blob",
       })
       .then((response) => {
