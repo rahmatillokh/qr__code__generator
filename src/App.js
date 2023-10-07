@@ -19,20 +19,20 @@ function App() {
         const qrCodeUrl = window.URL.createObjectURL(blob);
         setUrl(qrCodeUrl);
         setData(qrCodeUrl);
-        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setData(false);
-        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false after the request completes
       });
   };
 
   useEffect(() => {
-    if (data) {
-      handleFetch();
-    }
-  }, [data]);
+    // Only run handleFetch when the component mounts
+    handleFetch();
+  }, []);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -40,7 +40,7 @@ function App() {
         .share({
           title: "QR Code",
           text: "Check out this QR Code!",
-          url: url, // Share the URL of the generated QR code
+          url: url,
         })
         .then(() => {
           console.log("Shared successfully");
@@ -63,12 +63,12 @@ function App() {
           placeholder="...."
         />
         <button disabled={loading} onClick={handleFetch}>
-          Qr Code yaratish
+          {loading ? "Loading..." : "Qr Code yaratish"}
         </button>
 
         {data ? (
           <div>
-            <a href={url} download={Math.random() * 10000000000 + ".png"}>
+            <a href={url} download={"qrcode.png"}>
               Yuklab olish
             </a>
             <button onClick={handleShare}>Share</button>
